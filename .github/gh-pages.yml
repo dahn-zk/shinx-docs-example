@@ -1,13 +1,14 @@
-name: Publish Github Pages
+name: Deploy Sphinx documentation to Pages
 
+# Runs on pushes targeting the default branch
 on:
   push:
-    branches: [ master ]
+    branches: [master]
 
 # Cancel any in-progress job or run
 # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#concurrency
 concurrency:
-  group: gh-${{ github.ref }}
+  group: ${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -16,10 +17,9 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
     permissions:
       pages: write
       id-token: write
     steps:
-      - id: deployment
-        uses: sphinx-notes/pages@v3
+    - id: deployment
+      uses: sphinx-notes/pages@v3
